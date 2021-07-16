@@ -1,0 +1,247 @@
+\documentclass{article}
+
+
+
+\usepackage{arxiv}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}		% Can be removed after putting your text content
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{doi}
+
+\usepackage{tikz}
+\usepackage{amsmath}
+
+\DeclareMathOperator{\E}{\mathbb{E}}
+\newcommand{\up}{\uparrow}
+\newcommand{\down}{\downarrow}
+
+
+\title{More picture writing}
+
+%\date{September 9, 1985}	% Here you can change the date presented in the paper title
+%\date{} 					% Or removing it
+
+\author{ \href{https://orcid.org/0000-0003-2284-3204}{\includegraphics[scale=0.06]{orcid.pdf}\hspace{1mm}Boris~Demeshev}\\ %\thanks{github.com/bdemeshev/me} \\
+	Department of Computer Science, Department of Applied Economics\\
+	State University Higher School of Economics\\
+	Moscow \\
+	\texttt{bdemeshev@hse.ru} \\
+	%% examples of more authors
+	%% \AND
+	%% Coauthor \\
+	%% Affiliation \\
+	%% Address \\
+	%% \texttt{email} \\
+	%% \And
+	%% Coauthor \\
+	%% Affiliation \\
+	%% Address \\
+	%% \texttt{email} \\
+	%% \And
+	%% Coauthor \\
+	%% Affiliation \\
+	%% Address \\
+	%% \texttt{email} \\
+}
+
+% Uncomment to remove the date
+%\date{}
+
+% Uncomment to override  the `A preprint' in the header
+%\renewcommand{\headeright}{Technical Report}
+%\renewcommand{\undertitle}{Technical Report}
+\renewcommand{\shorttitle}{More picture writing}
+
+%%% Add PDF metadata to help others organize their library
+%%% Once the PDF is generated, you can check the metadata with
+%%% $ pdfinfo template.pdf
+\hypersetup{
+pdftitle={More picture writing},
+pdfsubject={q-bio.NC, q-bio.QM},
+pdfauthor={Boris~Demeshev},
+pdfkeywords={First keyword, Second keyword, More},
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+	In this article we give more picture writing examples that motivate and explain generating functions. 
+\end{abstract}
+
+
+\section{Picture writing approach}
+
+The picture writing approach to motivate generating functions was introduced in an old article \cite{polya1956picture}.
+The approach is visually appealing and really explains \textit{why} generating functions just count the objects of interest.
+
+Despite its beauty the picture writing approach is almost unknown. So we'll try to provide more examples!
+
+
+\section{Fibonacci sequence}
+
+
+...
+
+It's funny to draw bunnies on blackboard, they certainly catch student's attention. 
+To simplify drawing one may just write B for Big bunny and b for baby bunny. 
+
+
+\section{Paths to win one dollar}
+
+Imagine that I bet one dollar on a fair coin toss. My fortune may go up $\up$ or down $\down$ in every bet.
+I bet until I will increase my wellfare by one dollar. Let's count all the possible paths!
+
+For example the set of possible possible paths $S$ contains the path $\up$ and the path $\down\up\up$ but not the path $\up\down\down\up\up$. 
+The path $\up\down\down\up\up$ is not included in $S$ because I will stop after the first $\up$. 
+
+Hence
+\[
+S = \{ \up, \down\up\up, \down\up\down\up\up, \down\down\up\up\up, \ldots \}	
+\]
+
+Instead of writing curly brackets and comma to denote a set we will just use the plus sign $+$.
+
+\[
+S =  \up + \down\up\up + \down\up\down\up\up + \down\down\up\up\up + \ldots 	
+\]
+
+We don't make the difference between one sequence, say $\down\up\up$, and 
+a set containing one sequence, $\{\down\up\up \}$. 
+When writing one the wall you may omit curly brackets! It's ok!
+
+
+We need to invent multiplication of paths. That's easy! Just write two sequences next one to another.
+By this definition the multiplication is non-commutative:
+\[
+\up\down \cdot \down \down \up = \up\down \down \down \up  \neq \down \down \up \up\down =  \down \down \up \cdot \up\down 
+\]
+
+The multiplication of two sets or more sets is defined elementwise:
+For example
+\[
+	\up\down \cdot (\down \down \up + \down) = \up\down\down \down \up + \up\down \down
+\]
+
+Now we are ready to state the main recurrent equation for our set $S$. 
+
+
+If I loose the first dollar then I need to win one dollars twice!
+\[
+S = \up + \down \cdot S \cdot S	
+\]
+
+This is exactly the equation for generating functions! 
+We just simplify our notation. 
+Now we don't care whether the move is up or down and insted of both $\up$ and $\down$ we just write $t$. 
+
+By definition $g(\up) = t$, $g(\up\up\down) = t^3$ and $g(\up\up + \down\down +\up) = 2t^2 + t$.
+The polynomial $g(A) = t^3 + 2t^{15}$ means that 
+the set $A$ contains one sequence with three arrows and two sequences with fifteen arrows.
+
+In formal world the function $g$ is a homomorphism between up or down sequencies and polynomials. 
+The function $g$ preserves addition $+$ and multiplication $\cdot$.
+
+Hence we obtain the recurrence relation for the generating function
+\[
+g(S) = t + t g(S) g(S)	
+\]
+
+Now the standard machine of generating function may be used. 
+I reproduce it here for completeness of exposition. 
+
+There are two solutions of the quadratic equation
+\[
+g(S) = \frac{1\pm \sqrt{1 - 4t^2}}{2t}	
+\]
+
+Instead of boring differentiation in the Taylor expansion formula we use Newton's approach
+\[
+(1 + x)^a = \binom{a}{0} + \binom{a}{1} x + \binom{a}{1} x^2 + \ldots 
+\]
+
+Here $\binom{a}{0} = 1$ and for $k>0$:
+\[
+\binom{a}{k} = \frac{a(a-1)(a-2)\cdot \ldots \cdot (a-k + 1)}{k!} 	
+\]
+
+Hence 
+\[
+g(S)  = \frac{1\pm \left(1 + 0.5 (-4t^2) + \frac{0.5(0.5- 1)}{2!}(-4t^2)^2 + \frac{0.5(0.5 - 1)(0.5 - 2)}{3!}(-4t^2)^3 +\ldots    \right)}{2t}	
+\]
+
+All coefficients in $g(S)$ should be non-negative as they just counts the number of corresponding sequences.
+Ruling out this case we should leave the $-$ in nominator. 
+
+Finally we get
+\[
+g(S) = \sum_{k=0}^{\infty} \binom{0.5}{k} (-1)^k 2^{2k - 1} t^{2k - 1} = t + t^3 + 2t^5 + \ldots 	
+\]
+
+
+So the number of paths to win one dollar exactly in $2k - 1$ tosses is 
+\[
+	c_{2k - 1} = \binom{0.5}{k} (-1)^k 2^{2k - 1}.
+\]
+It can be simplified to
+\[
+  c_{2k - 1} = \frac{2^{k-1}\cdot 1\cdot 3 \cdot 5 \cdot \ldots (2k - 3)}{k!}	
+\]
+
+
+
+
+\section{Catalan numbers}
+
+The representation of Catalan numbers as triangulations of convex $n$-gon 
+was considered in \cite{polya1956picture}. 
+So I will consider some other representations of Catalan numbers.
+
+
+...
+
+
+% keywords can be removed
+% \keywords{First keyword \and Second keyword \and More}
+
+
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}  %%% Uncomment this line and comment out the ``thebibliography'' section below to use the external .bib file (using bibtex) .
+
+
+%%% Uncomment this section and comment out the \bibliography{references} line above to use inline references.
+% \begin{thebibliography}{1}
+
+% 	\bibitem{kour2014real}
+% 	George Kour and Raid Saabne.
+% 	\newblock Real-time segmentation of on-line handwritten arabic script.
+% 	\newblock In {\em Frontiers in Handwriting Recognition (ICFHR), 2014 14th
+% 			International Conference on}, pages 417--422. IEEE, 2014.
+
+% 	\bibitem{kour2014fast}
+% 	George Kour and Raid Saabne.
+% 	\newblock Fast classification of handwritten on-line arabic characters.
+% 	\newblock In {\em Soft Computing and Pattern Recognition (SoCPaR), 2014 6th
+% 			International Conference of}, pages 312--318. IEEE, 2014.
+
+% 	\bibitem{hadash2018estimate}
+% 	Guy Hadash, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and Alon
+% 	Jacovi.
+% 	\newblock Estimate and replace: A novel approach to integrating deep neural
+% 	networks with existing applications.
+% 	\newblock {\em arXiv preprint arXiv:1804.09028}, 2018.
+
+% \end{thebibliography}
+
+
+\end{document}
