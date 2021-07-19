@@ -18,6 +18,7 @@
 \usepackage{doi}
 
 \usepackage{tikz}
+\usepackage{tikzsymbols}
 \usepackage{amsmath}
 
 \DeclareMathOperator{\E}{\mathbb{E}}
@@ -25,6 +26,9 @@
 \newcommand{\down}{\downarrow}
 \newcommand{\bigb}{B}
 \newcommand{\babyb}{b}
+\newcommand{\friend}{\Cooley}
+\newcommand{\unfriend}{\Smiley}
+
 
 
 \title{More picture writing}
@@ -325,6 +329,74 @@ g(S) = 1 + 	t g(S) g(S)
 Then the standard generating function technique may be used. 
 
 
+\section{Triangular numbers}
+
+
+Imagine a tribe that has only one letter $a$ in the alphabet. 
+The dictionary of all valid words including silence $\square$ is
+
+\[
+S = \square + a + aa + aaa + aaaa + \ldots	
+\]
+
+The dictionary of the tribe satisfies the equation
+\[
+S = \square + a \cdot S	
+\]
+
+Here we do something trivial and replace every $a$ by $t$.
+
+\[
+g(S) = 1 + t \cdot g(S)
+\]
+
+Hence the generating function looks almost like the original dictionary:
+\[
+g(S) = \frac{1}{1-t} = 1 + t + t^2 + t^3 + \ldots	
+\]
+
+
+By the way if there are two letters in the alphabet the equation is 
+
+\[
+S = \square + a \cdot S + b \cdot S.
+\]
+
+But let's move on to the triangular numbers. 
+
+
+!!!! Here I need a picture
+
+
+Imagine a group of $n$ persons. 
+We are interested in counting all possible handshakes.
+
+Let's write them as a dictionary!
+\[
+S = \friend\friend + \unfriend\friend\friend + \friend\unfriend\friend + \friend\friend\unfriend + \ldots
+\]
+
+We can factor our dictionary as
+\[
+S = (\square + \unfriend + \unfriend\unfriend + \ldots) \cdot \friend \cdot (\square + \unfriend + \unfriend\unfriend + \ldots) \cdot \friend \cdot (\square + \unfriend + \unfriend\unfriend + \ldots),  	
+\]
+where $\square$ is an empty group of people.
+
+
+Now replace every symbol by letter $t$:
+\[
+g(S) = 	\frac{1}{1-t} \cdot  t \cdot  \frac{1}{1-t} \cdot t \cdot \frac{1}{1-t} 
+\]
+
+
+A triangle with $n$ dots on a side corresponds to handshakes of a group with $n+1$ persons.
+So we need to remove one $t$ to obtain generating function of triangular numbers.
+
+\[
+g = \frac{t}{(1-t)^3}
+\]
+
+
 \section{Discussion}
 
 
@@ -333,34 +405,48 @@ We multiply sequences of pictures or just words instead of numbers.
 We write equations where the solution is a set of picture writings. 
 That's more abstract and more fun!
 
-Formally speaking all sets of picture writings for the given problem is not a ring. 
-There are no inverse element for addition as addition is the union of sets. 
-Even more, there is an ambiguity in the definition of with a sum of a picture sequence with itself. 
-We avoid this problem by never adding the same picture sequence to itself. 
-
-To resolve the problem one may keep record of the number of each picture sequence.
-Like $S = 2 ab + abb + 3 abcd$. In this case $g(S) = 2t^2 + t^3 + 3t^4$.
-
-To introduce equations on words sets to college students one may start with a tribe 
-that has only one letter $a$ in the alphabet. 
-All the available words including silence $\square$ are
+So far we have focused on counting the number of words of particular lenght. 
+Our counting method is based on the one-to-one correspondance between sets of words and expressions with words combined by plus sign
 
 \[
-S = \square + a + aa + aaa + aaaa + \ldots	
+\{ aaa, abc, bbb, abcde \}  \leftrightarrow aaa + abc + bbb + abcde
 \]
 
-The dictionary of this tribe satisfies the equation
+We have avoided to add the same word to itself. 
+We don't need the same word counted twice when we try to establish the number of valid words with $n$ letters. 
+However our one-to-one corresponding may be extended to allow the addition of a word to itself. 
+All sets of valid words for a given problem is not a ring so we need a bigger object to allow ring structure.
+We will work not with dictionaries but with bank accounts. 
+
+We may think of words as currency names and a bank account of a person may be written as
 \[
-S = \square + a \cdot S	
+v = 5 aaa + 3.5 abc - 2 bbb + 7 abcde.
 \]
 
-If there are two letters in the alphabet the equation is 
+The guy $v$ has a debt of $2$ bbb notes, $5$ aaa notes, $3.5$ abc notes and $7$ abcde notes.
 
+The set of all possible bank accounts is an infinite dimensional real vector space. 
+The multiplication of words by concatenation completes the ring structure. 
+This multiplication is correctly defined as you may settle all operations with one-letter currencies, 
+than all operations with two-letters currencies and so on.
+
+The function $g$ that transform every letter into $t$ is a ring homomorphism between all possible bank accounts and polynomials. 
+
+In this example
 \[
-S = \square + a \cdot S + b \cdot S	
+g(5 aaa + 3.5 abc - 2 bbb + 7 abcde) = 6.5 t^3  + 7 t^4.
 \]
 
-And let the fun begin! 
+Usual sets are bank accounts with zero or one note of every currency. 
+
+However the main point of this article is not the formalisation of picture writing approach.
+My main goal is a call to use directly equations on sets to motivate generating functions. 
+
+
+The equations on sets are more intuitive! 
+Let's work with objects themselves to count them! 
+
+
 
 
 % keywords can be removed
