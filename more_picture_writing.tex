@@ -23,6 +23,8 @@
 \DeclareMathOperator{\E}{\mathbb{E}}
 \newcommand{\up}{\uparrow}
 \newcommand{\down}{\downarrow}
+\newcommand{\bigb}{B}
+\newcommand{\babyb}{b}
 
 
 \title{More picture writing}
@@ -90,7 +92,92 @@ Despite its beauty the picture writing approach is almost unknown. So we'll try 
 \section{Fibonacci sequence}
 
 
-...
+The rules to produce the Fibonacci sequence are simple. 
+Start with one young pair of rabbits, $F_1 = 1$. 
+Each young pair will be adult in one month, each adult pair will give birth to a new young pair every month. 
+The number of pairs alive at time $n$ is $F_n = F_{n-1} + F_{n-2}$, 
+where $F_{n-2}$ pairs are alive at $(n-2)$, so they are 
+adult at $(n-1)$, hence they give birth to new pairs at $n$. 
+Let's draw a picture a little bit like a pedigree tree:
+
+
+!!!! Here I need a picture
+
+Every living pair of rabbits at every moment of time may be identified with a pedigree string.
+For example there are three strings of length four: $\babyb\bigb\bigb\bigb$, 
+$\babyb\bigb\bigb\babyb$, $\babyb\bigb\babyb\bigb$.
+
+Let $S$ be the set of all valid pedigrees. 
+A pedigree is valid if it starts with baby bunny $\babyb$ and every baby bunny $\babyb$ is followed by big bunny $\bigb$. 
+
+\[
+S = \{ \babyb, \babyb\bigb, \babyb\bigb\bigb, \babyb\bigb\babyb, \ldots \} 	
+\]
+
+Instead of writing a set with curly brackets and comma we will use the plus symbol $+$.
+
+
+\[
+S =  \babyb + \babyb\bigb + \babyb\bigb\bigb +  \babyb\bigb\babyb + \ldots
+\]
+
+We introduce multiplication of pedigrees. 
+To multiply two pedigrees we just write them one next to another. 
+For example
+
+\[
+\babyb\bigb\bigb \cdot 	\babyb\bigb = \babyb\bigb\bigb\babyb\bigb
+\]
+
+The multiplication of two valid pedigrees may give rise to an unvalid pedigree,
+as here
+
+\[
+   \babyb\bigb\bigb \babyb \cdot \babyb \bigb = \babyb\bigb\bigb \babyb\babyb \bigb.
+\]
+
+
+Let's move on to the list of valid pedigrees. 
+Each valid pedigree with two or more symbols ends with $\bigb$ or with $\bigb\babyb$. 
+We take out the corresponding terms:
+
+
+\[
+S =  \babyb + (\babyb + \babyb\bigb + \babyb\bigb\bigb +  \babyb\bigb\babyb + \ldots) \cdot \bigb + (\babyb + \babyb\bigb + \babyb\bigb\bigb +  \babyb\bigb\babyb + \ldots) \cdot \bigb\babyb
+\]
+
+Or simply 
+
+\[
+S = \babyb + S\bigb + S\bigb\babyb	
+\]
+
+Now we just simplify our notation. 
+Imagine we don't care whether the bunny is young or adult and we just write $t$ for both types. 
+
+By definition $g(\bigb) = t$, $g(\babyb\bigb\babyb) = t^3$ and $g(\babyb\bigb + \bigb\babyb +\bigb) = 2t^2 + t$.
+The polynomial $g(A) = t^3 + 2t^{15}$ means that 
+the set $A$ contains one pedigree with three bunnies and two pedigrees with fifteen bunnies.
+
+In formal world the function $g$ is a homomorphism between sets of bunny pedigrees and polynomials. 
+The function $g$ preserves addition $+$ and multiplication $\cdot$.
+
+Hence we obtain the recurrence relation for the generating function
+\[
+g(S) = t + t g(S) + t^2 g(S)	
+\]
+
+Hence
+\[
+g(S) = \frac{t}{1 - t - t^2}	
+\]
+
+
+
+
+
+
+
 
 It's funny to draw bunnies on blackboard, they certainly catch student's attention. 
 To simplify drawing one may just write B for Big bunny and b for baby bunny. 
@@ -148,7 +235,7 @@ By definition $g(\up) = t$, $g(\up\up\down) = t^3$ and $g(\up\up + \down\down +\
 The polynomial $g(A) = t^3 + 2t^{15}$ means that 
 the set $A$ contains one sequence with three arrows and two sequences with fifteen arrows.
 
-In formal world the function $g$ is a homomorphism between up or down sequencies and polynomials. 
+In formal world the function $g$ is a homomorphism between sets of up or down sequencies and polynomials. 
 The function $g$ preserves addition $+$ and multiplication $\cdot$.
 
 Hence we obtain the recurrence relation for the generating function
@@ -204,10 +291,76 @@ It can be simplified to
 
 The representation of Catalan numbers as triangulations of convex $n$-gon 
 was considered in \cite{polya1956picture}. 
-So I will consider some other representations of Catalan numbers.
+So I will consider the representation of Catalan numbers with bracket sequences.
+
+The set of all valid brackets sequences including empty sequence $\square$ is 
+\[
+S = \square + () + (()) + ()() + ((())) + (())() + ()(()) + \ldots
+\]
+
+Multiplication is intuitive and non-commutative 
+\[
+ () \cdot (()) = ()(())
+\]
+
+Let's focus on the term that is inside the leftmost opening bracket ( and its closing sister ).
+
+This term can be any valid bracket sequence $S$. 
+To the right of them we can also have any valid bracket sequence $S$. 
+
+Hence we obtain the decomposition 
+\[
+S = \square + (\cdot S \cdot )\cdot S
+\]
+
+Each bracket pair is replaced by $t$. 
+The multiplication of bracket sequences is non-commutative but the multiplication of $t$-polynomials is commutative. 
+Empty bracket sequence with no brackets is replaced by $t^0 = 1$.
+
+And we get the equation 
+\[
+g(S) = 1 + 	t g(S) g(S)
+\]
+
+Then the standard generating function technique may be used. 
 
 
-...
+\section{Discussion}
+
+
+This picture writing approach may be used to introduce abstract algebra to college students. 
+We multiply sequences of pictures or just words instead of numbers. 
+We write equations where the solution is a set of picture writings. 
+That's more abstract and more fun!
+
+Formally speaking all sets of picture writings for the given problem is not a ring. 
+There are no inverse element for addition as addition is the union of sets. 
+Even more, there is an ambiguity in the definition of with a sum of a picture sequence with itself. 
+We avoid this problem by never adding the same picture sequence to itself. 
+
+To resolve the problem one may keep record of the number of each picture sequence.
+Like $S = 2 ab + abb + 3 abcd$. In this case $g(S) = 2t^2 + t^3 + 3t^4$.
+
+To introduce equations on words sets to college students one may start with a tribe 
+that has only one letter $a$ in the alphabet. 
+All the available words including silence $\square$ are
+
+\[
+S = \square + a + aa + aaa + aaaa + \ldots	
+\]
+
+The dictionary of this tribe satisfies the equation
+\[
+S = \square + a \cdot S	
+\]
+
+If there are two letters in the alphabet the equation is 
+
+\[
+S = \square + a \cdot S + b \cdot S	
+\]
+
+And let the fun begin! 
 
 
 % keywords can be removed
