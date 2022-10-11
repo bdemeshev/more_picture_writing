@@ -1,3 +1,4 @@
+% arara: pdflatex
 \documentclass{article}
 
 
@@ -40,7 +41,7 @@
 	Department of Computer Science, Department of Applied Economics\\
 	State University Higher School of Economics\\
 	Moscow \\
-	\texttt{bdemeshev@hse.ru} \\
+	\texttt{boris.demeshev@gmail.com} \\
 	%% examples of more authors
 	%% \AND
 	%% Coauthor \\
@@ -395,6 +396,42 @@ So we need to remove one $t$ to obtain generating function of triangular numbers
 \[
 g = \frac{t}{(1-t)^3}
 \]
+
+
+\section{Binomial distribution}
+
+Let's toss a coin $n$ times and list all possible outcomes in the form of a function.
+For $n=3$ we will get
+\[
+S = HHH + HHT + HTH + THH + HTT + THT + TTH + TTT = (T + H)^3.
+\]
+
+Imagine that the coin is biased with probability of head equal to $0.7$. 
+We can easily engrave all probabilities into our function by plugging-in $H=0.7h$, $T=0.3t$.
+\[
+g(h, t) = 0.7^3 h^3 + 0.7^2 0.3 h^2 t + 0.7^2 0.3 hth + \cdots + 0.3^3 t^3 = (0.7 h + 0.3t)^3.
+\]
+
+If we just want to count the number of heads we should ignore $t$ and evaluate our function at $t=1$:
+\[
+g(h) = 0.7^3 h^3 + C_3^2 0.7^2 0.3 h^2 + \ldots + 0.3^3 = (0.7h + 0.3)^3. 
+\]
+This is the ordinary one-variable probability generating function but we start with the description of 
+the set of all outcomes. 
+
+
+\section{Geometric disctribution}
+
+Let's toss a coin until we get the first head and list all possible outcomes in the form of a function.
+\[
+S = H + TH + TTH + TTTH + \ldots = (\square + T + T^2 + T^3 + \ldots) \cdot H = \frac{1}{1-T} H.
+\]
+
+Once again we may engrave the probabilities $0.7$ for $H$ and $0.3$ for $T$ into the function 
+\[
+g(h, t) = 0.7h + 0.3\cdot 0.7 th + 0.3^2 0.7 t^2 h +\ldots = \frac{1}{1-0.7t}0.3h.
+\]
+
 
 
 \section{Discussion}
